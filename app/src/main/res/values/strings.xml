@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">IneedyourhelpApp</string>
-    <string name="Button1">CHIAMATA DI EMERGENA</string>
+    <string name="Button1">CHIAMATA DI EMERGENZA</string>
     <string name="Button2">Imposta Contatti</string>
+    <string name="Button3">Imposta Messaggio</string>
+    <string name="Salva">Salva Messaggio</string>
+    <string name="edit_message">Imposta messaggio</string>
+    <string name="Carica">Carica messaggio</string>
+    <string name="title_activity_main3">Ciao</string>
+
 </resources>
