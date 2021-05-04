@@ -31,7 +31,26 @@ class MainActivity3 : AppCompatActivity() {
         textBox = findViewById<View>(R.id.textViewMessage) as EditText
     }
 
-    @SuppressLint("WorldReadableFiles")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /*  @SuppressLint("WorldReadableFiles")
     fun Salva(view: View?) {
         val str = textBox!!.text.toString()
         try {
@@ -51,7 +70,7 @@ class MainActivity3 : AppCompatActivity() {
         }
     }
 
-    fun Carica(view: View?) {
+   fun Carica(view: View?) {
         try {
             val fIn = openFileInput("mio_file.txt")
             val isr = InputStreamReader(fIn)
@@ -72,7 +91,7 @@ class MainActivity3 : AppCompatActivity() {
         } catch (ioe: IOException) {
             ioe.printStackTrace()
         }
-    }
+    } */
 
 }
 
