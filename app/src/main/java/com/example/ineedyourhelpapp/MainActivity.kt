@@ -22,8 +22,5 @@ class MainActivity : AppCompatActivity() {
     fun inviaMessaggio(v:View){
 
         val uri: Uri = Uri.parse("smsto:000000012223")
-
-
-
     }
 }
