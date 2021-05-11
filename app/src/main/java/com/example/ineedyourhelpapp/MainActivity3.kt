@@ -11,18 +11,6 @@ import java.io.IOException
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
 
-/*
-class MainActivity3 : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main3)
-    }
-    fun salvaMessaggio(v: View){
-        val message = textViewMessage.text.toString()
-    }
-}
-*/
-
 class MainActivity3 : AppCompatActivity() {
     var textBox: EditText? = null
     override fun onCreate(savedInstanceState: Bundle?) {
