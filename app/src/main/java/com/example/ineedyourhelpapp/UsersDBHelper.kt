@@ -117,7 +117,6 @@ class UsersDBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,
 
         private val SQL_CREATE_ENTRIES =
             "CREATE TABLE " + DBContract.UserEntry.TABLE_NAME + " (" +
-                    //DBContract.UserEntry.COLUMN_USER_ID + " TEXT PRIMARY KEY," +
                     DBContract.UserEntry.COLUMN_NAME + " TEXT," +
                     DBContract.UserEntry.COLUMN_NUMBER + " TEXT)"
 

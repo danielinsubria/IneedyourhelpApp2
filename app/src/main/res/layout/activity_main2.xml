@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Contacts"
+        android:text="Contatti"
         android:textSize="36sp"
         android:padding="10dp" />
 
@@ -21,14 +21,14 @@
 
         <EditText
             android:id="@+id/edittext_name"
-            android:hint="Name"
+            android:hint="Nome"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="1"/>
         <EditText
             android:id="@+id/edittext_number"
-            android:hint="Number"
+            android:hint="Numero"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="addUser"
-            android:text="Insert" />
+            android:text="Inserisci" />
 
         <Button
             android:id="@+id/button_delete_user"
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="deleteUser"
-            android:text="Delete" />
+            android:text="Elimina" />
 
         <Button
             android:id="@+id/button_show_all"
@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="showAllUsers"
-            android:text="Show" />
+            android:text="Mostra" />
     </LinearLayout>
 
     <TextView
