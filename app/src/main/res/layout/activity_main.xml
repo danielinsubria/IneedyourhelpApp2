@@ -33,16 +33,6 @@
         android:textSize="24sp"
         android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/getLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/text"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="40dp"
-        android:text="Ottieni posizione"
-        />
-
     <TextView
         android:id="@+id/textViewPosizione"
         android:layout_width="wrap_content"
@@ -57,7 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="stop"
-        android:onClick="stopinvio"/>
+        android:onClick="stopinvio" />
 
 
 </LinearLayout>
