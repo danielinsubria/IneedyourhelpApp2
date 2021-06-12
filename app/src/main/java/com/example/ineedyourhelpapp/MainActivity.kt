@@ -17,6 +17,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main2.*
+import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity(), LocationListener {
 
@@ -32,11 +34,15 @@ class MainActivity : AppCompatActivity(), LocationListener {
 
         usersDBHelper = UsersDBHelper(this)
 
+
+        getLocation()
+
         val button: Button = findViewById(R.id.getLocation)
         button.setOnClickListener {
             getLocation()
         }
     }
+
 
     //apertura activity dei contatti
     fun OpenSecondActivity(v: View) {
@@ -70,11 +76,50 @@ class MainActivity : AppCompatActivity(), LocationListener {
     }
 
     fun inviaMessaggio(view: View) {//invio messaggio ai contatti nel db con la posizione
+       /* var tstart=true
+        thread(start = true) {
+            while(tstart) {
+                Thread.sleep(500)
+                getLocation()
+            }
+             this.runOnUiThread {
+                 imageView.setImageBitmap(bmp)
+             }
+        }*/
         val manager = SmsManager.getDefault()
-        val number:String = "3473892"
+        //val number:String = "3473892"
         //var result = usersDBHelper.giveData(UserModel( number = number))
-        val message:String = "la mia posizione è "
-        manager.sendTextMessage(number, null, message, null, null)
+        val message:String = "la mia posizione è "+ tvGpsLocation.text
+        var users = usersDBHelper.readAllUsers()
+        //this.ll_entries.removeAllViews()
+        users.forEach {
+            // var tv_user = TextView(this)
+            var number= it.number.toString()
+            manager.sendTextMessage(number, null, message, null, null)
+            //tv_user.textSize = 30F
+            //tv_user.text = it.name.toString() + " - " + it.number.toString()
+            // this.ll_entries.addView(tv_user)
         }
+        //manager.sendTextMessage(number, null, message, null, null)
+        }
+
+    fun stopinvio(v: View){
+
+    }
+    fun obtainNumber(v: View) {
+        var users = usersDBHelper.readAllUsers()
+        //this.ll_entries.removeAllViews()
+        users.forEach {
+           // var tv_user = TextView(this)
+            var number= it.number.toString()
+           // manager.sendTextMessage(number, null, message, null, null)
+            //tv_user.textSize = 30F
+            //tv_user.text = it.name.toString() + " - " + it.number.toString()
+           // this.ll_entries.addView(tv_user)
+        }
+       // this.textview_result.text = "Find " + users.size + " users"
+    }
 }
+
+
 
