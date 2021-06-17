@@ -76,13 +76,16 @@ class MainActivity : AppCompatActivity(), LocationListener {
     }
 
     fun inviaMessaggio(view: View) {//invio messaggio ai contatti nel db con la posizione
+        val msg= findViewById(R.id.emergenza) as TextView
+        msg.setText("EMERGENZA ATTIVA")
+
 
         thread(start = true) {
             invio=true
             while (invio) {
                 val manager = SmsManager.getDefault()
 
-                val message: String = "la mia posizione è " + tvGpsLocation.text
+                val message: String = "!!!MESSAGGIO DI EMERGENZA!!! HO BISOGNO DI AIUTO: la mia posizione è " + tvGpsLocation.text
                 var users = usersDBHelper.readAllUsers()
 
                 users.forEach {
@@ -96,6 +99,8 @@ class MainActivity : AppCompatActivity(), LocationListener {
     }
 
     fun stopinvio(v: View) {
+        val msg= findViewById(R.id.emergenza) as TextView
+        msg.setText("EMERGENZA DISATTIVA")
             invio=false;
 
             }
