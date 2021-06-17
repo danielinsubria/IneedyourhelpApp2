@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
@@ -25,9 +26,10 @@ import java.util.concurrent.Executors
 import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity(), LocationListener {
-    var invio= true
-    lateinit var usersDBHelper: UsersDBHelper
+    var invio= true //variabile che ci serve per gli invii dell messaggio
+    lateinit var usersDBHelper: UsersDBHelper //variabile per l'uso di SQLite
 
+    //variabili per l'utilizzo del GPS
     private lateinit var locationManager: LocationManager
     private lateinit var tvGpsLocation: TextView
     private val locationPermissionCode = 2
@@ -38,10 +40,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
 
         usersDBHelper = UsersDBHelper(this)
         getLocation()
-
-
     }
-
 
     //apertura activity dei contatti
     fun OpenSecondActivity(v: View) {
@@ -74,12 +73,15 @@ class MainActivity : AppCompatActivity(), LocationListener {
             }
         }
     }
-
-    fun inviaMessaggio(view: View) {//invio messaggio ai contatti nel db con la posizione
+    //invio messaggio ai contatti nel DataBase con la posizione aggiornata
+    fun inviaMessaggio(view: View) {
         val msg= findViewById(R.id.emergenza) as TextView
         msg.setText("EMERGENZA ATTIVA")
 
+        val buttonstop = findViewById(R.id.button) as Button
+        buttonstop.visibility = View.VISIBLE //visibilità tasto stop
 
+        //invio del messaggio ai contatti con la posizione
         thread(start = true) {
             invio=true
             while (invio) {
@@ -92,12 +94,12 @@ class MainActivity : AppCompatActivity(), LocationListener {
                     var number = it.number.toString()
                     manager.sendTextMessage(number, null, message, null, null)
                 }
-                Thread.sleep(10000)
+                Thread.sleep(10000) //tempo di invio del messaggio
 
             }
         }
     }
-
+    //funzione che ferma l 'invio dei messaggi dopo aver cliccato il tasto "Stop"
     fun stopinvio(v: View) {
         val msg= findViewById(R.id.emergenza) as TextView
         msg.setText("EMERGENZA DISATTIVA")

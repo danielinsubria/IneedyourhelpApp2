@@ -17,7 +17,7 @@ class MainActivity2 : AppCompatActivity() {
 
         usersDBHelper = UsersDBHelper(this)
     }
-
+    //funzione per aggiungere un utente
     fun addUser(v: View) {
         var name = this.edittext_name.text.toString()
         var number = this.edittext_number.text.toString()
@@ -25,30 +25,29 @@ class MainActivity2 : AppCompatActivity() {
             Toast.makeText(this@MainActivity2, "Utente aggiunto", Toast.LENGTH_SHORT).show()
             var result = usersDBHelper.insertUser(UserModel(name = name, number = number))
         } else {
-            Toast.makeText(this@MainActivity2, "nome o numero non valido", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@MainActivity2, "Nome o numero non valido", Toast.LENGTH_SHORT).show()
         }
 
-        //clear all edittext s
+        //pulire tutte le edittext
         this.edittext_number.setText("")
         this.edittext_name.setText("")
-        //this.textview_result.text = "Added user "
         this.ll_entries.removeAllViews()
 
         showAllUsers(v)
 
     }
-
+    //funzione per eliminare un utente
     fun deleteUser(v: View) {
         var name = this.edittext_name.text.toString()
         if (name != null && name.length > 2) {
             val result = usersDBHelper.deleteUser(name)
-            this.textview_result.text = "Deleted user"
+            this.textview_result.text = "Utente eliminato"
         } else {
-            this.textview_result.text = "Inserire il nome "
+            this.textview_result.text = "Inserire il nome del contatto "
         }
         this.ll_entries.removeAllViews()
     }
-
+    //funzione per mostrare un utente
     fun showAllUsers(v: View) {
         var users = usersDBHelper.readAllUsers()
         this.ll_entries.removeAllViews()
@@ -58,7 +57,7 @@ class MainActivity2 : AppCompatActivity() {
             tv_user.text = it.name.toString() + " - " + it.number.toString()
             this.ll_entries.addView(tv_user)
         }
-        this.textview_result.text = "Find " + users.size + " users"
+        this.textview_result.text = "Ci sono " + users.size + " utenti"
     }
 }
 
