@@ -4,7 +4,7 @@ import android.provider.BaseColumns
 
 object DBContract {
 
-    /* Inner class that defines the table contents */
+    //struttura del db
     class UserEntry : BaseColumns {
         companion object {
             val TABLE_NAME = "users"

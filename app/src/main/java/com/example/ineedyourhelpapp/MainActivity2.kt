@@ -21,9 +21,9 @@ class MainActivity2 : AppCompatActivity() {
     fun addUser(v: View) {
         var name = this.edittext_name.text.toString()
         var number = this.edittext_number.text.toString()
-        if ((name != null && name.length > 2) && (number != null && number.length > 2)) {
+        if ((name != null && name.length > 2) && (number != null && number.length > 2)) {//controllo per validita numero e nome
             Toast.makeText(this@MainActivity2, "Utente aggiunto", Toast.LENGTH_SHORT).show()
-            var result = usersDBHelper.insertUser(UserModel(name = name, number = number))
+            var result = usersDBHelper.insertUser(UserModel(name = name, number = number)) //inserimento nel db
         } else {
             Toast.makeText(this@MainActivity2, "Nome o numero non valido", Toast.LENGTH_SHORT).show()
         }
@@ -38,12 +38,12 @@ class MainActivity2 : AppCompatActivity() {
     }
     //funzione per eliminare un utente
     fun deleteUser(v: View) {
-        var name = this.edittext_name.text.toString()
+        var name = this.edittext_name.text.toString() //prende il nome che abbiamo inserito
         if (name != null && name.length > 2) {
-            val result = usersDBHelper.deleteUser(name)
-            this.textview_result.text = "Utente eliminato"
+            val result = usersDBHelper.deleteUser(name)//elimina il nome corrispondente nel db
+            this.textview_result.text = "Utente eliminato" //se l'utente esiste
         } else {
-            this.textview_result.text = "Inserire il nome del contatto "
+            this.textview_result.text = "Inserire il nome del contatto " //se l'utente non esiste
         }
         this.ll_entries.removeAllViews()
     }
@@ -51,7 +51,7 @@ class MainActivity2 : AppCompatActivity() {
     fun showAllUsers(v: View) {
         var users = usersDBHelper.readAllUsers()
         this.ll_entries.removeAllViews()
-        users.forEach {
+        users.forEach { // mostra tutti gli utenti presenti nel db
             var tv_user = TextView(this)
             tv_user.textSize = 30F
             tv_user.text = it.name.toString() + " - " + it.number.toString()

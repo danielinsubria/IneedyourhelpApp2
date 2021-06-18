@@ -39,6 +39,9 @@ class MainActivity : AppCompatActivity(), LocationListener {
         setContentView(R.layout.activity_main)
 
         usersDBHelper = UsersDBHelper(this)
+        //prima di avviare l'emergenza bisogna aspettare che compaia la posizione questo perche l'operazione richiede qualche secondo all'avvio
+        Toast.makeText(this@MainActivity, "PRIMA DI AVVIARE L'EMERGENZA ASPETTARE LAPOSIZIONE ", Toast.LENGTH_SHORT).show()
+        //richiama getlocation per ottenere laposizione quando si avvia l'app, la posizione poi si aggiorna automatomaticamente
         getLocation()
     }
 
@@ -76,23 +79,23 @@ class MainActivity : AppCompatActivity(), LocationListener {
     //invio messaggio ai contatti nel DataBase con la posizione aggiornata
     fun inviaMessaggio(view: View) {
         val msg= findViewById(R.id.emergenza) as TextView
-        msg.setText("EMERGENZA ATTIVA")
+        msg.setText("EMERGENZA ATTIVA") //cambia la label sotto l'emergenza in modo che si capisca che l'emergenza é attiva
 
         val buttonstop = findViewById(R.id.button) as Button
         buttonstop.visibility = View.VISIBLE //visibilità tasto stop
 
         //invio del messaggio ai contatti con la posizione
         thread(start = true) {
-            invio=true
-            while (invio) {
+            invio=true //serve per ciclare infinitamente all'interno del thread in modo che il programma non si blocchi e che invii
+            while (invio) {//messaggi di emergenza continui ogni 10 s anche quando l'applicazione é in background
                 val manager = SmsManager.getDefault()
-
+                //imposta la struttura del messaggio testo + posizione aggiornata
                 val message: String = "!!!MESSAGGIO DI EMERGENZA!!! HO BISOGNO DI AIUTO: la mia posizione è " + tvGpsLocation.text
                 var users = usersDBHelper.readAllUsers()
 
-                users.forEach {
-                    var number = it.number.toString()
-                    manager.sendTextMessage(number, null, message, null, null)
+                users.forEach {//recupera tutti i contatti e invia i messaggi
+                    var number = it.number.toString() //conversione del numero a stringa per inviarlo
+                    manager.sendTextMessage(number, null, message, null, null) //invio messaggio automatico
                 }
                 Thread.sleep(10000) //tempo di invio del messaggio
 
@@ -102,8 +105,8 @@ class MainActivity : AppCompatActivity(), LocationListener {
     //funzione che ferma l 'invio dei messaggi dopo aver cliccato il tasto "Stop"
     fun stopinvio(v: View) {
         val msg= findViewById(R.id.emergenza) as TextView
-        msg.setText("EMERGENZA DISATTIVA")
-            invio=false;
+        msg.setText("EMERGENZA DISATTIVA") //cambia la textvew in modo che si capisca che l'emergenza é disattiva
+            invio=false; // blocca il ciclo infiinito nel thread in modo che non vengano piu inviati i messaggi
 
             }
         }

@@ -15,9 +15,7 @@ class UsersDBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,
         db.execSQL(SQL_CREATE_ENTRIES)
     }
 
-    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        // This database is only a cache for online data, so its upgrade policy is
-        // to simply to discard the data and start over
+    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {//definizione dell'onupgrade
         db.execSQL(SQL_DELETE_ENTRIES)
         onCreate(db)
     }
@@ -28,16 +26,16 @@ class UsersDBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,
 
     @Throws(SQLiteConstraintException::class)
     fun insertUser(user: UserModel): Boolean {
-        // Gets the data repository in write mode
+        // trasforma il repositori in modalita scrittura
         val db = writableDatabase
 
-        // Create a new map of values, where column names are the keys
+        // crea una mappa di valori con chiave il nome
         val values = ContentValues()
        // values.put(DBContract.UserEntry.COLUMN_USER_ID, user.userid)
         values.put(DBContract.UserEntry.COLUMN_NAME, user.name)
         values.put(DBContract.UserEntry.COLUMN_NUMBER, user.number)
 
-        // Insert the new row, returning the primary key value of the new row
+        //inserisce una nuova riga e ritorna la primary key della riga creata
         val newRowId = db.insert(DBContract.UserEntry.TABLE_NAME, null, values)
 
         return true
@@ -45,50 +43,50 @@ class UsersDBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,
 
     @Throws(SQLiteConstraintException::class)
     fun deleteUser(username: String): Boolean {
-        // Gets the data repository in write mode
+        // mette il db in modalita scrittura
         val db = writableDatabase
-        // Define 'where' part of query.
+        // Definisce il where
         val selection = DBContract.UserEntry.COLUMN_NAME + " LIKE ?"
-        // Specify arguments in placeholder order.
+        // specifica gli argomenti
         val selectionArgs = arrayOf(username)
-        // Issue SQL statement.
+        //SQL statement.
         db.delete(DBContract.UserEntry.TABLE_NAME, selection, selectionArgs)
 
         return true
     }
 
     fun readUser(username: String): ArrayList<UserModel> {
-        val users = ArrayList<UserModel>()
-        val db = writableDatabase
+        val users = ArrayList<UserModel>() // utilizziamo il modello creato per contenere i dati
+        val db = writableDatabase //db in scrittura
         var cursor: Cursor? = null
-        try {
+        try { //legge tutti gli utenti e i relativi numeri
             cursor = db.rawQuery("select * from " + DBContract.UserEntry.TABLE_NAME + " WHERE " + DBContract.UserEntry.COLUMN_NAME+ "='" + username + "'", null)
         } catch (e: SQLiteException) {
-            // if table not yet present, create it
+            // se la table non e presente la crea
             db.execSQL(SQL_CREATE_ENTRIES)
             return ArrayList()
         }
 
         var name: String
         var number: String
-        if (cursor!!.moveToFirst()) {
-            while (cursor.isAfterLast == false) {
-                name = cursor.getString(cursor.getColumnIndex(DBContract.UserEntry.COLUMN_NAME))
-                number = cursor.getString(cursor.getColumnIndex(DBContract.UserEntry.COLUMN_NUMBER))
+        if (cursor!!.moveToFirst()) { //mette i dati del cursor nella struttura user model
+            while (cursor.isAfterLast == false) { // finche il cursor contiene qualcosa continua
+                name = cursor.getString(cursor.getColumnIndex(DBContract.UserEntry.COLUMN_NAME)) //reperisce nome
+                number = cursor.getString(cursor.getColumnIndex(DBContract.UserEntry.COLUMN_NUMBER)) //reperisce numero
 
-                users.add(UserModel( name, number))
-                cursor.moveToNext()
+                users.add(UserModel( name, number)) // aggiunge l'utente all'usermodel
+                cursor.moveToNext() // manda avanti la posizione del cursore per leggere il nuovo dato
             }
         }
         return users
     }
-    //read users max 5
+    //legge al massimo 5 utenti dopo il 5 non ne inserisce piu
     fun readAllUsers(): ArrayList<UserModel> {
         val users = ArrayList<UserModel>()
-        val db = writableDatabase
+        val db = writableDatabase //db in writable
         var cursor: Cursor? = null
         try {
-            cursor = db.rawQuery("select * from " + DBContract.UserEntry.TABLE_NAME +" LIMIT 5", null)
+            cursor = db.rawQuery("select * from " + DBContract.UserEntry.TABLE_NAME +" LIMIT 5", null)//lettura dei 5 utenti
         } catch (e: SQLiteException) {
             db.execSQL(SQL_CREATE_ENTRIES)
             return ArrayList()
